@@ -52,6 +52,10 @@
     let coffeeImage;
     let revenueMessage;
 
+    let drinksOrdered = [];
+
+
+
     // use this JavaScript object in further study step
 
     const prices = {
@@ -64,7 +68,11 @@
     
     $('#coffee-image').attr("src", "static/coffee_beans.jpg");
     
-    function makeCoffee(){
+    function makeCoffee(drinkType){
+        drinksOrdered.push(drinkType);
+        console.log(drinksOrdered);
+        $("#revenue").html(revenue());
+
         $("#coffee-image").attr("src", "static/coffee_machine.jpg");
 
         setTimeout(function(){
@@ -76,8 +84,18 @@
         }, 4000)
     }
 
-    $("#coffee-image").on("click", makeCoffee);
+    $("#coffee-image").on("click", function(){makeCoffee("brew");});
+    $("#espresso").on("click", function(){makeCoffee("espresso")});
+    $("#latte").on("click", function(){makeCoffee("latte")});
+    $("#hot-chocolate").on("click", function(){makeCoffee("hot chocolate")});
 
+    function revenue(){
+        let total = 0
+        for (let drink of drinksOrdered){
+            total += prices[drink];
+        }
+        return total;
+    }
 
 </script>
 
